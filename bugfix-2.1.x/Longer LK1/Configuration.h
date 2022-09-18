@@ -77,7 +77,7 @@
 //#define U20
 //#define U20_PLUS
 //#define U30
-#define LK1
+//#define LK1
 //#define LK1_PLUS
 //#define LK2
 //#define LK4
@@ -86,7 +86,7 @@
 
 //#define TS_V11
 //#define TS_V12
-#define TS_V19
+//#define TS_V19
 
 // 2 - Select the screen controller type. Most common is ILI9341 - First option. If your screen remains white,
 //     Try the alternate setting - this should enable ST7789V or ILI9328. For other LCDs... code is needed
@@ -97,9 +97,8 @@
 
 //===========================================================================
 
-// @section Device Model
-
 // @section info
+
 // Author info of this build printed to the host during boot and M115
 #define STRING_CONFIG_H_AUTHOR "Hobi, tpruvot"  // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
@@ -177,8 +176,20 @@
 
 // Name displayed in the LCD "Ready" message and Info menu
 //#define CUSTOM_MACHINE_NAME "3D Printer"
-#if ENABLED(LK1)
+#if ENABLED(U20)
+  #define CUSTOM_MACHINE_NAME "Alfawise U20"
+#elif ENABLED(U30)
+  #define CUSTOM_MACHINE_NAME "Alfawise U30"
+#elif ENABLED(U20_PLUS)
+  #define CUSTOM_MACHINE_NAME "Alfawise U20+"
+#elif ENABLED(LK1)
   #define CUSTOM_MACHINE_NAME "Longer3D LK1"
+#elif ENABLED(LK1_PLUS)
+  #define CUSTOM_MACHINE_NAME "Longer3D LK1+"
+#elif ENABLED(LK2)
+  #define CUSTOM_MACHINE_NAME "Longer3D LK2"
+#elif ENABLED(LK4)
+  #define CUSTOM_MACHINE_NAME "Longer3D LK4"
 #else
   #error "Please specify U20, U20_PLUS, U30, LK1, LK1_PLUS, LK2, or LK4."
 #endif
@@ -795,11 +806,22 @@
   //#define MIN_BED_POWER 0
   //#define PID_BED_DEBUG // Print Bed PID debug data to the serial port.
 
- 
-  // From M303 command for Alfawise U20
-  #define DEFAULT_bedKp 841.68
-  #define DEFAULT_bedKi 152.12
-  #define DEFAULT_bedKd 1164.25
+  #if ANY(U30, LK2, LK4)
+    // From M303 command for Alfawise U30
+    #define DEFAULT_bedKp 338.46
+    #define DEFAULT_bedKi 63.96
+    #define DEFAULT_bedKd 447.78
+  #elif EITHER(U20, LK1)
+    // From M303 command for Alfawise U20
+    #define DEFAULT_bedKp 841.68
+    #define DEFAULT_bedKi 152.12
+    #define DEFAULT_bedKd 1164.25
+  #elif EITHER(U20_PLUS, LK1_PLUS)
+    // These PID settings MUST be updated
+    #define DEFAULT_bedKp 841.68
+    #define DEFAULT_bedKi 152.12
+    #define DEFAULT_bedKd 1164.25
+  #endif
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -1745,9 +1767,20 @@
 //#define W_HOME_DIR -1
 
 // @section machine
-#define X_BED_SIZE    300
-#define Y_BED_SIZE    300
-#define Z_MAX_POS     400
+
+#if ANY(U30, LK2, LK4)
+  #define X_BED_SIZE    220
+  #define Y_BED_SIZE    220
+  #define Z_MAX_POS     250
+#elif EITHER(U20, LK1)
+  #define X_BED_SIZE    300
+  #define Y_BED_SIZE    300
+  #define Z_MAX_POS     400
+#elif EITHER(U20_PLUS, LK1_PLUS)
+  #define X_BED_SIZE    400
+  #define Y_BED_SIZE    400
+  #define Z_MAX_POS     500
+#endif
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -2510,7 +2543,6 @@
  * you must uncomment the following option or it won't work.
  */
 #define SDSUPPORT
-#define SDIO_SUPPORT // Note from Hobi : Added as was not present in the file...
 
 /**
  * SD CARD: ENABLE CRC
@@ -3231,12 +3263,24 @@
 
   #define TOUCH_SCREEN_CALIBRATION
 
-  #if ENABLED(TS_V19)
-    // Longer LK1/U30 2.8" Ver 2019 / Blue PCB, SID240x320-8PCB-D
+  #if ENABLED(TS_V11)
+    // Alfawise U20 ILI9341 2.8 TP Ver 1.1 / Green PCB on the back of touchscreen
+    #define TOUCH_CALIBRATION_X  12000
+    #define TOUCH_CALIBRATION_Y  9000
+    #define TOUCH_OFFSET_X      -24
+    #define TOUCH_OFFSET_Y      -17
+  #elif ENABLED(TS_V12)
+    // Alfawise U30 ILI9341 2.8 TP Ver 1.2 / Blue PCB on the back of touchscreen
+    #define TOUCH_CALIBRATION_X  12000
+    #define TOUCH_CALIBRATION_Y -9000
+    #define TOUCH_OFFSET_X      -43
+    #define TOUCH_OFFSET_Y       257
+  #elif ENABLED(TS_V19)
+    // Longer LK4/U30 2.8" Ver 2019 / Blue PCB, SID240x320-8PCB-D
     #define TOUCH_CALIBRATION_X -12000
-    #define TOUCH_CALIBRATION_Y  8500
-    #define TOUCH_OFFSET_X       336
-    #define TOUCH_OFFSET_Y       -17
+    #define TOUCH_CALIBRATION_Y  9000
+    #define TOUCH_OFFSET_X       320
+    #define TOUCH_OFFSET_Y       0
   #endif
 
   //#define TOUCH_ORIENTATION TOUCH_LANDSCAPE
