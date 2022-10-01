@@ -93,7 +93,7 @@
 //     with the proper boot sequence to be developped.
 
 #define LCD_READ_ID   0xD3 // Read display identification information in reg ID4 0xD3, for ILI9341 screens
-//#define LCD_READ_ID 0x04 // Read display identification information in reg ID1 0x04 - ST7789V / ILI9328 or others
+#define LCD_READ_ID 0xD3 // Read display identification information in reg ID1 0x04 - ST7789V / ILI9328 or others
 
 //===========================================================================
 
@@ -176,7 +176,7 @@
 //#define BLUETOOTH
 
 // Name displayed in the LCD "Ready" message and Info menu
-//#define CUSTOM_MACHINE_NAME "3D Printer"
+#define CUSTOM_MACHINE_NAME "Longer3D LK1"
 #if ENABLED(LK1)
   #define CUSTOM_MACHINE_NAME "Longer3D LK1"
 #else
@@ -1755,7 +1755,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-//#define Z_MAX_POS 250
+#define Z_MAX_POS 400
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
@@ -2033,8 +2033,8 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
+  #define MESH_INSET 10              // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 3      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   //#define UBL_HILBERT_CURVE       // Use Hilbert distribution for less travel when probing multiple points
@@ -2077,9 +2077,9 @@
 #define LCD_BED_TRAMMING
 
 #if ENABLED(LCD_BED_TRAMMING)
-  #define BED_TRAMMING_INSET_LFRB { 30, 30, 30, 30 } // (mm) Left, Front, Right, Back insets
-  #define BED_TRAMMING_HEIGHT      0.2        // (mm) Z height of nozzle at leveling points
-  #define BED_TRAMMING_Z_HOP       4.0        // (mm) Z height of nozzle between leveling points
+  #define BED_TRAMMING_INSET_LFRB { 30, 60, 30, 0 } // (mm) Left, Front, Right, Back insets
+  #define BED_TRAMMING_HEIGHT      19        // (mm) Z height of nozzle at leveling points
+  #define BED_TRAMMING_Z_HOP       25.0        // (mm) Z height of nozzle between leveling points
   //#define BED_TRAMMING_INCLUDE_CENTER       // Move to the center after the last corner
   //#define BED_TRAMMING_USE_PROBE
   #if ENABLED(BED_TRAMMING_USE_PROBE)

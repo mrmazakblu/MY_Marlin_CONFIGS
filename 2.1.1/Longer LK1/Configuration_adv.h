@@ -196,7 +196,7 @@
 #if ENABLED(HEPHESTOS2_HEATED_BED_KIT)
   #undef TEMP_SENSOR_BED
   #define TEMP_SENSOR_BED 70
-  #define HEATER_BED_INVERTING true
+  #define HEATER_BED_INVERTING false
 #endif
 
 //
@@ -608,9 +608,9 @@
   //#define USE_OCR2A_AS_TOP
   #ifndef FAST_PWM_FAN_FREQUENCY
     #ifdef __AVR__
-      #define FAST_PWM_FAN_FREQUENCY ((F_CPU) / (2 * 255 * 1))
+      #define FAST_PWM_FAN_FREQUENCY 31400
     #else
-      #define FAST_PWM_FAN_FREQUENCY 1000U
+      #define FAST_PWM_FAN_FREQUENCY 31400
     #endif
   #endif
 #endif
@@ -1692,7 +1692,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  //#define SDCARD_CONNECTION LCD
+  #define SDCARD_CONNECTION CUSTOM_CABLE
   #define SDCARD_CONNECTION CUSTOM_CABLE
 
   // Enable if SD detect is rendered useless (e.g., by using an SD extender)
@@ -2352,11 +2352,11 @@
 // The number of linear moves that can be in the planner at once.
 // The value of BLOCK_BUFFER_SIZE must be a power of 2 (e.g., 8, 16, 32)
 #if BOTH(SDSUPPORT, DIRECT_STEPPING)
-  #define BLOCK_BUFFER_SIZE  8
+  #define BLOCK_BUFFER_SIZE  32
 #elif ENABLED(SDSUPPORT)
   #define BLOCK_BUFFER_SIZE 32
 #else
-  #define BLOCK_BUFFER_SIZE 16 // Marlin default
+  #define BLOCK_BUFFER_SIZE 32 // Marlin default
 #endif
 
 // @section serial
