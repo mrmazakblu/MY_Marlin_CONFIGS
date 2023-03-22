@@ -1,0 +1,3 @@
+Run M995 from terminal to calibrate touchscreen.
+
+The Ifelse commands in the config file do not parse correctly. Manualy set the variables insted of teh logis used.
